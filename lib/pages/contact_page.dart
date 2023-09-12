@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:my_app/pages/confirmation_message_page.dart';
+
+import '../database/databaseoperation.dart';
 
 // Define a Contact Us Form widget.
 class ContactUsForm extends StatefulWidget {
@@ -15,9 +18,8 @@ class ContactUsFormState extends State<ContactUsForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  String? category;
-  String? designer;
+  final TextEditingController companyNameController = TextEditingController();
+  final TextEditingController companyEmailController = TextEditingController();
   PhoneNumber number = PhoneNumber(isoCode: 'IND');
   @override
   Widget build(BuildContext context) {
@@ -111,10 +113,10 @@ class ContactUsFormState extends State<ContactUsForm> {
                     ),
                   ),
                   autovalidateMode: AutovalidateMode.disabled,
-                  controller: emailController,
+                  controller: companyNameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter company name address';
+                      return 'Please enter company name';
                     }
                     return null;
                   },
@@ -131,7 +133,7 @@ class ContactUsFormState extends State<ContactUsForm> {
                     ),
                   ),
                   autovalidateMode: AutovalidateMode.disabled,
-                  controller: emailController,
+                  controller: companyEmailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter company email address';
@@ -154,11 +156,11 @@ class ContactUsFormState extends State<ContactUsForm> {
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      submitForm(
+                          nameController.text,
+                          phoneNumberController.text,
+                          companyNameController.text,
+                          companyEmailController.text);
                     }
                   },
                   child: const Text('Submit'),
@@ -169,5 +171,20 @@ class ContactUsFormState extends State<ContactUsForm> {
         ),
       ),
     );
+  }
+
+  void submitForm(String name, String phoneNumber, String companyName,
+      String companyEmail) {
+    addContactUsRequest(name, phoneNumber, companyName, companyEmail).then((_) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const ConfirmationMessage(success: true)),
+          (Route<dynamic> route) => false);
+    }).catchError((error) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const ConfirmationMessage(success: false)),
+          (Route<dynamic> route) => false);
+    });
   }
 }
