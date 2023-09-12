@@ -104,7 +104,27 @@ class ContactUsFormState extends State<ContactUsForm> {
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Company Name',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(
+                      Icons.business,
+                    ),
+                  ),
+                  autovalidateMode: AutovalidateMode.disabled,
+                  controller: emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter company name address';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Company Email',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(
                       Icons.email,
@@ -114,92 +134,14 @@ class ContactUsFormState extends State<ContactUsForm> {
                   controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email address';
+                      return 'Please enter company email address';
                     }
                     if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
                         .hasMatch(value)) {
-                      return 'Please enter a valid email address';
+                      return 'Please enter a valid company email address';
                     }
                     return null;
                   },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: DropdownButtonFormField(
-                  items: <String>['Dog', 'Cat', 'Tiger', 'Lion']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                    );
-                  }).toList(),
-                  hint: const Text('Select a Category'),
-                  value: category,
-                  validator: (value) =>
-                      value == null ? "Select a Category" : null,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      category = newValue!;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Category',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: DropdownButtonFormField(
-                  items: <String>['Dog', 'Cat', 'Tiger', 'Lion']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                    );
-                  }).toList(),
-                  hint: const Text('Select a Designer'),
-                  value: designer,
-                  validator: (value) =>
-                      value == null ? "Select a Designer" : null,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      designer = newValue!;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Designer',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                  ),
                 ),
               ),
               Padding(
