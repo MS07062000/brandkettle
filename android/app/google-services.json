@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "545176309888",
+    "project_id": "brandkettle",
+    "storage_bucket": "brandkettle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545176309888:android:87e93616290858ac3d5665",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKRwpHDbdNul3_Vr62u10prHV7aZiikcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
