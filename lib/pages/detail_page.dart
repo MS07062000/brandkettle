@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_app/pages/contact_page.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -222,7 +223,17 @@ class _DetailPageState extends State<DetailPage> {
                         )
                       ],
                     ),
-                  )
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ContactUsForm()),
+                      );
+                    },
+                    child: const Text('Book a call'),
+                  ),
                 ],
               ),
             ),
