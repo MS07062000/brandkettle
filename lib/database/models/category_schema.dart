@@ -1,11 +1,9 @@
-import 'package:flutter/services.dart';
-
 class Category {
   final String name;
-  final Uint8List imageBytes;
+  final String image;
 
   Category({
     required this.name,
-    required this.imageBytes,
+    required this.image,
   });
 }
