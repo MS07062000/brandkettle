@@ -224,15 +224,27 @@ class _DetailPageState extends State<DetailPage> {
                       ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ContactUsForm()),
-                      );
-                    },
-                    child: const Text('Book a call'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        elevation: 10,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ContactUsForm()),
+                        );
+                      },
+                      child: const Text(
+                        'Book a call',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
                   ),
                 ],
               ),

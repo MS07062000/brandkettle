@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:my_app/database/models/contactus_Schema.dart';
 import 'package:my_app/pages/confirmation_message_page.dart';
 
 import '../database/databaseoperation.dart';
@@ -26,6 +27,8 @@ class ContactUsFormState extends State<ContactUsForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contact Us'),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -38,9 +41,19 @@ class ContactUsFormState extends State<ContactUsForm> {
                 child: TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Name',
+                    labelStyle: TextStyle(
+                      color: Colors.black, // Initial text color
+                    ),
                     border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     prefixIcon: Icon(
                       Icons.person,
+                      color: Colors.black,
                     ),
                   ),
                   autovalidateMode: AutovalidateMode.disabled,
@@ -64,7 +77,16 @@ class ContactUsFormState extends State<ContactUsForm> {
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     counterText: "",
+                    labelStyle: const TextStyle(
+                      color: Colors.black, // Initial text color
+                    ),
                     border: const OutlineInputBorder(),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     prefixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -107,9 +129,19 @@ class ContactUsFormState extends State<ContactUsForm> {
                 child: TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Company Name',
+                    labelStyle: TextStyle(
+                      color: Colors.black, // Initial text color
+                    ),
                     border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     prefixIcon: Icon(
                       Icons.business,
+                      color: Colors.black,
                     ),
                   ),
                   autovalidateMode: AutovalidateMode.disabled,
@@ -127,9 +159,19 @@ class ContactUsFormState extends State<ContactUsForm> {
                 child: TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Company Email',
+                    labelStyle: TextStyle(
+                      color: Colors.black, // Initial text color
+                    ),
                     border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     prefixIcon: Icon(
                       Icons.email,
+                      color: Colors.black,
                     ),
                   ),
                   autovalidateMode: AutovalidateMode.disabled,
@@ -150,20 +192,27 @@ class ContactUsFormState extends State<ContactUsForm> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
                     fixedSize:
                         MaterialStateProperty.all(const Size.fromHeight(50)),
                   ),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
-                      submitForm(
-                          nameController.text,
-                          phoneNumberController.text,
-                          companyNameController.text,
-                          companyEmailController.text);
+                      submitForm(ContactFormData(
+                          name: nameController.text,
+                          phoneNumber: phoneNumberController.text,
+                          companyName: companyNameController.text,
+                          companyEmail: companyEmailController.text));
                     }
                   },
-                  child: const Text('Submit'),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
               ),
             ],
@@ -173,9 +222,8 @@ class ContactUsFormState extends State<ContactUsForm> {
     );
   }
 
-  void submitForm(String name, String phoneNumber, String companyName,
-      String companyEmail) {
-    addContactUsRequest(name, phoneNumber, companyName, companyEmail).then((_) {
+  void submitForm(ContactFormData contactFormData) {
+    addContactUsRequest(contactFormData).then((_) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (context) => const ConfirmationMessage(success: true)),
