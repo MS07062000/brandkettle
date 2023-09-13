@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_app/database/databaseoperation.dart';
 import 'package:my_app/database/models/category_schema.dart';
+import 'package:my_app/database/models/storedesign_schema.dart';
 import 'package:my_app/pages/detail_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +13,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Category> categories = [];
+  List<StoreDesign> storeDesigns = [];
+  @override
+  void initState() {
+    super.initState();
+    loadCategories();
+    loadStoreDesign();
+  }
+
+  Future<void> loadCategories() async {
+    final List<Category> fetchedCategories = await getCategories();
+    setState(() {
+      categories = fetchedCategories;
+    });
+  }
+
+  Future<void> loadStoreDesign() async {
+    final List<StoreDesign> fetchedStoreDesign = await getStoreDesigns();
+    setState(() {
+      storeDesigns = fetchedStoreDesign;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,73 +83,13 @@ class _HomePageState extends State<HomePage> {
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://images.unsplash.com/photo-1525879000488-bff3b1c387cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"),
-                                  fit: BoxFit.cover)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text("Jean-Luis")
-                      ],
+              child: categories.isEmpty
+                  ? const CircularProgressIndicator()
+                  : Row(
+                      children: categories.map((category) {
+                        return circularCategory(category);
+                      }).toList(),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"),
-                                  fit: BoxFit.cover)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text("Phillinpe")
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"),
-                                  fit: BoxFit.cover)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text("Lesly Juarez")
-                      ],
-                    ),
-                  )
-                ],
-              ),
             ),
             const SizedBox(
               height: 40,
@@ -141,88 +105,25 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             const SizedBox(
-              height: 30,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const DetailPage()));
-              },
-              child: Container(
-                width: double.infinity,
-                height: 150,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/image_1.png"))),
-              ),
-            ),
-            const SizedBox(
               height: 20,
             ),
-            Row(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Container(
-                      width: (MediaQuery.of(context).size.width - 80) / 2,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                              image: AssetImage("assets/images/image_2.png"),
-                              fit: BoxFit.cover)),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: categories.isEmpty
+                  ? const CircularProgressIndicator()
+                  : Row(
+                      children: storeDesigns.map((storeDesign) {
+                        return store(storeDesign);
+                      }).toList(),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: (MediaQuery.of(context).size.width - 80) / 2,
-                      height: 230,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                              image: AssetImage("assets/images/image_3.png"),
-                              fit: BoxFit.cover)),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      width: (MediaQuery.of(context).size.width - 80) / 2,
-                      height: 230,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                              image: AssetImage("assets/images/image_4.png"),
-                              fit: BoxFit.cover)),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: (MediaQuery.of(context).size.width - 80) / 2,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                              image: AssetImage("assets/images/image_5.png"),
-                              fit: BoxFit.cover)),
-                    ),
-                  ],
-                )
-              ],
-            )
+            ),
           ],
         ),
       ),
     ));
   }
 
-  Widget category(String categoryName, String categoryImage) {
+  Widget circularCategory(Category category) {
     return Padding(
       padding: const EdgeInsets.only(right: 20),
       child: Column(
@@ -233,29 +134,48 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: NetworkImage(categoryImage), fit: BoxFit.cover)),
+                    image: NetworkImage(category.image), fit: BoxFit.cover)),
           ),
           const SizedBox(
             height: 15,
           ),
-          Text(categoryName)
+          Text(category.name)
         ],
       ),
     );
   }
 
-  Widget store(String storeDesignImage) {
+  Widget store(StoreDesign storeDesign) {
+    final String categoryImage =
+        findCategoryImage(categories, storeDesign.category);
     return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const DetailPage()));
-      },
-      child: Container(
-        width: double.infinity,
-        height: 150,
-        decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(storeDesignImage))),
-      ),
-    );
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => DetailPage(
+                      storeDesign: storeDesign, categoryImage: categoryImage)));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: 150,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(storeDesign.mainDesignImage))),
+          ),
+        ));
+  }
+
+  String findCategoryImage(List<Category> categories, String categoryName) {
+    try {
+      Category category = categories.firstWhere(
+          (category) => category.name == categoryName,
+          orElse: () => Category(name: '', image: ''));
+      return category.image;
+    } catch (error) {
+      return ''; // Or provide a default image URL
+    }
   }
 }

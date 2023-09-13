@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
 import 'package:my_app/database/models/category_schema.dart';
 import 'package:my_app/database/models/contactus_Schema.dart';
+import 'package:my_app/database/models/storedesign_schema.dart';
 
 // Define a function to add data
 Future<void> addContactUsRequest(ContactFormData contactFormData) {
@@ -19,34 +19,67 @@ Future<List<Category>> getCategories() async {
 
   for (final QueryDocumentSnapshot<Map<String, dynamic>> document
       in querySnapshot.docs) {
-    final String name = document.data()['name'] as String;
-    final String imageUrl = document.data()['image'] as String;
+    Map<String, dynamic> data = document.data();
+    final String name = data['Name'] as String;
+    final String imageLocation = data['Image'] as String;
 
-    final Uint8List? imageBytes = await downloadImage(imageUrl);
+    final String imageURL = await _getImageURL(imageLocation);
 
-    final category =
-        Category(name: name, imageBytes: imageBytes ?? Uint8List(0));
+    final category = Category(name: name, image: imageURL);
     categories.add(category);
   }
 
   return categories;
 }
 
-Future<Uint8List?> downloadImage(String imageUrl) async {
-  final FirebaseStorage storage = FirebaseStorage.instance;
-  final Reference ref = storage.refFromURL(imageUrl);
+Future<List<StoreDesign>> getStoreDesigns() async {
+  final List<StoreDesign> storeDesigns = [];
 
   try {
-    final FullMetadata metadata = await ref.getMetadata();
-    final int? imageSize = metadata.size;
+    // Reference to the Firestore collection "Store Design"
+    final QuerySnapshot<Map<String, dynamic>> storeDesignCollectionSnapshot =
+        await FirebaseFirestore.instance.collection('Store Design').get();
 
-    if (imageSize == null) {
-      return Uint8List(0);
+    for (final QueryDocumentSnapshot<Map<String, dynamic>> document
+        in storeDesignCollectionSnapshot.docs) {
+      Map<String, dynamic> data = document.data();
+      List<String> galleryImagesLocation = List<String>.from(data['Gallery']);
+
+      // Decode the main design image from Firebase Storage
+      String mainDesignImage = await _getImageURL(data['Main Design Image']);
+
+      // Decode the gallery images from Firebase Storage
+      List<String> galleryImages = [];
+      for (String imageLocation in galleryImagesLocation) {
+        String imageURL = await _getImageURL(imageLocation);
+        galleryImages.add(imageURL);
+      }
+
+      // Create a StoreDesign object and add it to the list
+      StoreDesign storeDesign = StoreDesign(
+        mainDesignImage: mainDesignImage,
+        gallery: galleryImages,
+        category: data['Category'],
+        description: data['Description'],
+      );
+
+      storeDesigns.add(storeDesign);
     }
+  } catch (error) {
+    // error handling here if needed
+  }
 
-    final Uint8List? imageBytes = await ref.getData(imageSize);
-    return imageBytes;
-  } catch (e) {
-    return Uint8List(0);
+  return storeDesigns;
+}
+
+Future<String> _getImageURL(String imageLocation) async {
+  try {
+    // Decode the image from Firebase Storage
+    String imageURL = await FirebaseStorage.instance
+        .refFromURL(imageLocation)
+        .getDownloadURL();
+    return imageURL;
+  } catch (error) {
+    return ''; // Return an empty string or a default URL in case of an error
   }
 }

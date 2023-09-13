@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_app/database/models/storedesign_schema.dart';
 import 'package:my_app/pages/contact_page.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  final StoreDesign storeDesign;
+  final String categoryImage;
+  const DetailPage(
+      {super.key, required this.storeDesign, required this.categoryImage});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -15,6 +19,30 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: getBody(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SizedBox(
+          child: FloatingActionButton(
+            shape:
+                const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+            elevation: 10,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ContactUsForm(),
+                ),
+              );
+            },
+            child: const Text(
+              'Book a call',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -26,9 +54,9 @@ class _DetailPageState extends State<DetailPage> {
           Container(
             width: double.infinity,
             height: size.height * 0.5,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/image_detail.png"),
+                  image: NetworkImage(widget.storeDesign.mainDesignImage),
                   fit: BoxFit.cover),
             ),
             child: SafeArea(
@@ -77,13 +105,13 @@ class _DetailPageState extends State<DetailPage> {
                           borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "10 best interior ideas for your\nliving room",
-                    style: TextStyle(fontSize: 20, height: 1.5),
-                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // const Text(
+                  //   "10 best interior ideas for your\nliving room",
+                  //   style: TextStyle(fontSize: 20, height: 1.5),
+                  // ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -92,81 +120,28 @@ class _DetailPageState extends State<DetailPage> {
                       Container(
                         width: 40,
                         height: 40,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
+                                image: NetworkImage(widget.categoryImage),
                                 fit: BoxFit.cover)),
                       ),
                       const SizedBox(
                         width: 20,
                       ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Jean-Luis",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Text(
-                            "Interior Design",
-                            style: TextStyle(fontSize: 13),
-                          )
-                        ],
-                      )
+                      Text(
+                        widget.storeDesign.category,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(3)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Text("Interior"),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(3)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Text("40m2"),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(3)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Text("Ideas"),
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
-                    style: TextStyle(height: 1.6),
+                  Text(
+                    widget.storeDesign.description,
+                    style: const TextStyle(height: 1.6),
                   ),
                   const SizedBox(
                     height: 20,
@@ -181,76 +156,30 @@ class _DetailPageState extends State<DetailPage> {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                    image:
-                                        AssetImage("assets/images/image_2.png"),
-                                    fit: BoxFit.cover)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                    image:
-                                        AssetImage("assets/images/image_3.png"),
-                                    fit: BoxFit.cover)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                    image:
-                                        AssetImage("assets/images/image_4.png"),
-                                    fit: BoxFit.cover)),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.white,
-                        elevation: 10,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ContactUsForm()),
-                        );
-                      },
-                      child: const Text(
-                        'Book a call',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
+                        children: widget.storeDesign.gallery
+                            .map((galleryImageURL) =>
+                                galleryImageContainer(galleryImageURL))
+                            .toList()),
                   ),
                 ],
               ),
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget galleryImageContainer(String galleryImageURL) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: Container(
+        width: 150,
+        height: 150,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+                image: NetworkImage(galleryImageURL), fit: BoxFit.cover)),
       ),
     );
   }
