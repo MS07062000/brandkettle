@@ -32,7 +32,8 @@ class _DetailPageState extends State<DetailPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ContactUsForm(),
+                builder: (context) =>
+                    const ContactUsForm(submissionSuccessful: true),
               ),
             );
           },

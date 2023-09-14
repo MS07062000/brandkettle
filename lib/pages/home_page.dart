@@ -74,69 +74,60 @@ class _HomePageState extends State<HomePage> {
   Widget getBody() {
     return SafeArea(
       child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: categories.isEmpty || storeDesigns.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
                 children: <Widget>[
-                  const Text(
-                    "Category",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        const Text(
+                          "Category",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                        SvgPicture.asset("assets/images/forward_icon.svg")
+                      ],
+                    ),
                   ),
-                  SvgPicture.asset("assets/images/forward_icon.svg")
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                  left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: categories.isEmpty
-                    ? const CircularProgressIndicator()
-                    : Row(
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: categories.map((category) {
                           return circularCategory(category);
                         }).toList(),
                       ),
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    "Popular Store",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  SvgPicture.asset("assets/images/forward_icon.svg")
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        const Text(
+                          "Popular Store",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                        SvgPicture.asset("assets/images/forward_icon.svg")
+                      ],
+                    ),
+                  ),
+                  layout(storeDesigns),
                 ],
               ),
-            ),
-
-            // SingleChildScrollView(
-            //   scrollDirection: Axis.vertical,
-            //   child: storeDesigns.isEmpty
-            //       ? const CircularProgressIndicator()
-            //       : Row(
-            //           children: storeDesigns.map((storeDesign) {
-            //             return store(storeDesign);
-            //           }).toList(),
-            //         ),
-            // ),
-            storeDesigns.isEmpty
-                ? const CircularProgressIndicator()
-                : layout(storeDesigns),
-          ],
-        ),
       ),
     );
   }
@@ -162,29 +153,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // Widget store(StoreDesign storeDesign) {
-  //   final String categoryImage =
-  //       findCategoryImage(categories, storeDesign.category);
-  //   return InkWell(
-  //       onTap: () {
-  //         Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (_) => DetailPage(
-  //                     storeDesign: storeDesign, categoryImage: categoryImage)));
-  //       },
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(5.0),
-  //         child: Container(
-  //           width: MediaQuery.of(context).size.width * 0.5,
-  //           height: 150,
-  //           decoration: BoxDecoration(
-  //               image: DecorationImage(
-  //                   image: NetworkImage(storeDesign.mainDesignImage))),
-  //         ),
-  //       ));
-  // }
 
   String findCategoryImage(List<Category> categories, String categoryName) {
     try {
@@ -245,3 +213,38 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+  // SingleChildScrollView(
+            //   scrollDirection: Axis.vertical,
+            //   child: storeDesigns.isEmpty
+            //       ? const CircularProgressIndicator()
+            //       : Row(
+            //           children: storeDesigns.map((storeDesign) {
+            //             return store(storeDesign);
+            //           }).toList(),
+            //         ),
+            // ),
+
+  // Widget store(StoreDesign storeDesign) {
+  //   final String categoryImage =
+  //       findCategoryImage(categories, storeDesign.category);
+  //   return InkWell(
+  //       onTap: () {
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (_) => DetailPage(
+  //                     storeDesign: storeDesign, categoryImage: categoryImage)));
+  //       },
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(5.0),
+  //         child: Container(
+  //           width: MediaQuery.of(context).size.width * 0.5,
+  //           height: 150,
+  //           decoration: BoxDecoration(
+  //               image: DecorationImage(
+  //                   image: NetworkImage(storeDesign.mainDesignImage))),
+  //         ),
+  //       ));
+  // }

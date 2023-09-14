@@ -54,7 +54,8 @@ class ConfirmationMessage extends StatelessWidget {
                   } else {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) => const ContactUsForm()),
+                            builder: (context) =>
+                                ContactUsForm(submissionSuccessful: success)),
                         (Route<dynamic> route) => false);
                   }
                 },
