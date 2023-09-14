@@ -19,27 +19,26 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: getBody(),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SizedBox(
-          child: FloatingActionButton(
-            shape:
-                const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-            elevation: 10,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ContactUsForm(),
-                ),
-              );
-            },
-            child: const Text(
-              'Book a call',
-              style: TextStyle(fontSize: 20),
-            ),
+      floatingActionButton: Container(
+        padding: const EdgeInsets.only(left: 30.0),
+        width: double.infinity,
+        child: FloatingActionButton(
+          shape:
+              BeveledRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          elevation: 10,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ContactUsForm(),
+              ),
+            );
+          },
+          child: const Text(
+            'Book a call',
+            style: TextStyle(fontSize: 20),
           ),
         ),
       ),
@@ -67,11 +66,16 @@ class _DetailPageState extends State<DetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: SvgPicture.asset("assets/images/back_icon.svg")),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          padding:
+                              const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                          child:
+                              SvgPicture.asset("assets/images/back_icon.svg")),
+                    ),
                     Row(
                       children: <Widget>[
                         SvgPicture.asset("assets/images/heart_icon.svg"),
@@ -160,6 +164,9 @@ class _DetailPageState extends State<DetailPage> {
                             .map((galleryImageURL) =>
                                 galleryImageContainer(galleryImageURL))
                             .toList()),
+                  ),
+                  const SizedBox(
+                    height: 55,
                   ),
                 ],
               ),

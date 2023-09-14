@@ -61,6 +61,8 @@ Future<List<StoreDesign>> getStoreDesigns() async {
         gallery: galleryImages,
         category: data['Category'],
         description: data['Description'],
+        width: data['Width'],
+        height: data['Height'],
       );
 
       storeDesigns.add(storeDesign);

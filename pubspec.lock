@@ -203,6 +203,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_wall_layout:
+    dependency: "direct main"
+    description:
+      name: flutter_wall_layout
+      sha256: "321dc9bfa85705c43908b0ce73b57f5c5cdccbb931e52f7f6faa6d681df4f42b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
