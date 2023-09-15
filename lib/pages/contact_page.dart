@@ -32,7 +32,7 @@ class ContactUsFormState extends State<ContactUsForm> {
           // Navigate to the home page
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => const HomePage(),
             ),
           );
           return false; // Prevent normal back navigation
