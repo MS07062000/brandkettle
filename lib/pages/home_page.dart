@@ -73,12 +73,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget getBody() {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: categories.isEmpty || storeDesigns.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
+      child: categories.isEmpty || storeDesigns.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                   layout(storeDesigns),
                 ],
               ),
-      ),
+            ),
     );
   }
 

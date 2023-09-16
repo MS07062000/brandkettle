@@ -53,7 +53,7 @@ Future<List<StoreDesign>> getStoreDesigns() async {
     final List<StoreDesign> storeDesigns = [];
     // Reference to the Firestore collection "Store Design"
     final QuerySnapshot<Map<String, dynamic>> storeDesignCollectionSnapshot =
-        await FirebaseFirestore.instance.collection('Store Design').get();
+        await FirebaseFirestore.instance.collection('storeDesign').get();
 
     for (final QueryDocumentSnapshot<Map<String, dynamic>> document
         in storeDesignCollectionSnapshot.docs) {
