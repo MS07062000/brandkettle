@@ -37,9 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.7
   line_icons: ^2.0.3
-  firebase_core: ^2.15.1
-  cloud_firestore: ^4.9.1
-  firebase_storage: ^11.2.6
+  firebase_core: ^2.17.0
+  cloud_firestore: ^4.9.3
+  # firebase_storage: ^11.2.8
   intl_phone_number_input: ^0.7.3+1
   lottie: ^2.6.0
   flutter_wall_layout: ^2.1.1
