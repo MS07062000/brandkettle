@@ -101,3 +101,132 @@ Future<String> _getImageURL(String imageLocation) async {
     return ''; // Return an empty string or a default URL in case of an error
   }
 }
+
+Future<void> uploadStoreDesign() async {
+  // Initialize Firebase (you should have already set up Firebase in your app)
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  // Create an array of documents with the specified fields
+  List<Map<String, dynamic>> storeDesignArray = [
+    {
+      'Category': 'Jewellery',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Jewellery/jewellery2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Jewellery/jewellery3.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Jewellery/jewellery4.jpeg'
+      ],
+      'Height': 1,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Jewellery/jewellery1.jpg',
+      'Width': 1,
+    },
+    {
+      'Category': 'Sports',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Sports/sports2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Sports/sports3.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Sports/sports4.jpeg'
+      ],
+      'Height': 1,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Sports/sports1.jpeg',
+      'Width': 2,
+    },
+    {
+      'Category': 'Mobile',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Mobile/mobilestore2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Mobile/mobilestore3.avif',
+        'gs://brandkettle.appspot.com/Categories/Mobile/mobilestore4.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Mobile/mobilestore5.jpg',
+        'gs://brandkettle.appspot.com/Categories/Mobile/mobilestore6.jpg'
+      ],
+      'Height': 1,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Mobile/mobilestore1.jpg',
+      'Width': 1,
+    },
+    {
+      'Category': 'F&B',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/F&B/f&b1.jpeg',
+        'gs://brandkettle.appspot.com/Categories/F&B/f&b2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/F&B/f&b4.jpeg',
+        'gs://brandkettle.appspot.com/Categories/F&B/f&b5.jpeg'
+      ],
+      'Height': 1,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/F&B/f&b01.jpeg',
+      'Width': 2,
+    },
+    {
+      'Category': 'Apparel',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Apparel/apparel2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Apparel/apparel3.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Apparel/apparel4.jpeg'
+      ],
+      'Height': 2,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Apparel/apparel1.jpeg',
+      'Width': 1,
+    },
+    {
+      'Category': 'Professional',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Professional/professional2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Professional/professional3.jpg',
+        'gs://brandkettle.appspot.com/Categories/Professional/professional4.jpeg'
+      ],
+      'Height': 1,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Professional/professional1.jpeg',
+      'Width': 1,
+    },
+    {
+      'Category': 'Clinic',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Clinic/clinic2.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Clinic/clinic3.jpeg',
+        'gs://brandkettle.appspot.com/Categories/Clinic/clinic4.jpeg'
+      ],
+      'Height': 1,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Clinic/clinic1.jpeg',
+      'Width': 1,
+    },
+    {
+      'Category': 'Eye-wear',
+      'Description':
+          'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. The writer has no idea what topic the random paragraph will be about when it appears. This forces the writer to use creativity to complete one of three common writing challenges. The writer can use the paragraph as the first one of a short story and build upon it. A second option is to use the random paragraph somewhere in a short story they create. The third option is to have the random paragraph be the ending paragraph in a short story. No matter which of these challenges is undertaken, the writer is forced to use creativity to incorporate the paragraph into their writing.',
+      'Gallery': [
+        'gs://brandkettle.appspot.com/Categories/Eyewear/eyewear2.avif',
+        'gs://brandkettle.appspot.com/Categories/Eyewear/eyewear3.jpg',
+        'gs://brandkettle.appspot.com/Categories/Eyewear/eyewear4.jpeg'
+      ],
+      'Height': 2,
+      'Main Design Image':
+          'gs://brandkettle.appspot.com/Categories/Eyewear/eyewear1.jpg',
+      'Width': 2,
+    },
+  ];
+
+  // Upload the documents to the 'storeDesign' collection
+  for (int i = 0; i < storeDesignArray.length; i++) {
+    await firestore.collection('storeDesign').add(storeDesignArray[i]);
+  }
+}

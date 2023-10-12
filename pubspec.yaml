@@ -43,6 +43,7 @@ dependencies:
   intl_phone_number_input: ^0.7.3+1
   lottie: ^2.6.0
   flutter_wall_layout: ^2.1.1
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/images/categories/
     - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see

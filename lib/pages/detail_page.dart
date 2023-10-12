@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_app/database/models/storedesign_schema.dart';
 import 'package:my_app/pages/contact_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DetailPage extends StatefulWidget {
   final StoreDesign storeDesign;
@@ -128,11 +129,11 @@ class _DetailPageState extends State<DetailPage> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: NetworkImage(widget.categoryImage),
+                                image: AssetImage(widget.categoryImage),
                                 fit: BoxFit.cover)),
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: 10,
                       ),
                       Text(
                         widget.storeDesign.category,
@@ -187,7 +188,8 @@ class _DetailPageState extends State<DetailPage> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-                image: NetworkImage(galleryImageURL), fit: BoxFit.cover)),
+                image: CachedNetworkImageProvider(galleryImageURL),
+                fit: BoxFit.cover)),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:my_app/database/databaseoperation.dart';
 import 'package:my_app/database/models/category_schema.dart';
 import 'package:my_app/database/models/storedesign_schema.dart';
 import 'package:my_app/pages/detail_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,20 +15,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Category> categories = [];
+  List<Category> categories = [
+    Category(
+        name: 'Jewellery', image: 'assets/images/categories/jewellery.png'),
+    Category(name: 'Sports', image: 'assets/images/categories/sports.png'),
+    Category(name: 'Mobile', image: 'assets/images/categories/mobile.png'),
+    Category(name: 'F&B', image: 'assets/images/categories/f&b.png'),
+    Category(name: 'Apparel', image: 'assets/images/categories/apparel.png'),
+    Category(
+        name: 'Professional',
+        image: 'assets/images/categories/professional.png'),
+    Category(name: 'Clinic', image: 'assets/images/categories/sports.png'),
+    Category(name: 'Eyewear', image: 'assets/images/categories/eyewear.png'),
+  ];
   List<StoreDesign> storeDesigns = [];
   @override
   void initState() {
     super.initState();
-    loadCategories();
+    // loadCategories();
     loadStoreDesign();
-  }
-
-  Future<void> loadCategories() async {
-    final List<Category> fetchedCategories = await getCategories();
-    setState(() {
-      categories = fetchedCategories;
-    });
   }
 
   Future<void> loadStoreDesign() async {
@@ -45,8 +51,9 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.black,
         elevation: 0,
         leadingWidth: 200.0,
+        toolbarHeight: 80.0,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
+          padding: const EdgeInsets.only(left: 12.0, top: 10.0),
           child: Image.asset(
             'assets/images/companyLogo.png',
           ),
@@ -98,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
+                        left: 16.0, right: 16.0, top: 10.0, bottom: 20.0),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -133,36 +140,48 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget circularCategory(Category category) {
+    StoreDesign storeDesign = storeDesigns.firstWhere(
+      (design) => design.category == category.name,
+      orElse: () => StoreDesign(
+          mainDesignImage: '',
+          gallery: [],
+          category: '',
+          description: '',
+          width: 0,
+          height: 0),
+    );
     return Padding(
       padding: const EdgeInsets.only(right: 20),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: NetworkImage(category.image), fit: BoxFit.cover)),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(category.name)
-        ],
+      child: GestureDetector(
+        onTap: () => {
+          if (storeDesign.category.isNotEmpty)
+            {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => DetailPage(
+                          storeDesign: storeDesign,
+                          categoryImage: category.image)))
+            }
+        },
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: AssetImage(category.image), fit: BoxFit.cover)),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(category.name)
+          ],
+        ),
       ),
     );
-  }
-
-  String findCategoryImage(List<Category> categories, String categoryName) {
-    try {
-      Category category = categories.firstWhere(
-          (category) => category.name == categoryName,
-          orElse: () => Category(name: '', image: ''));
-      return category.image;
-    } catch (error) {
-      return ''; // Or provide a default image URL
-    }
   }
 
   Widget layout(List<StoreDesign> storeDesigns) {
@@ -191,7 +210,7 @@ class _HomePageState extends State<HomePage> {
   Widget __buildStoneChild(
       {required StoreDesign storeDesign, required double surface}) {
     final String categoryImage =
-        findCategoryImage(categories, storeDesign.category);
+        'assets/images/categories/${storeDesign.category.toLowerCase()}.png';
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -206,7 +225,7 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                image: NetworkImage(storeDesign.mainDesignImage)),
+                image: CachedNetworkImageProvider(storeDesign.mainDesignImage)),
           ),
         ),
       ),
@@ -214,7 +233,18 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+ // String findCategoryImage(List<Category> categories, String categoryName) {
+  //   try {
+  //     Category category = categories.firstWhere(
+  //         (category) => category.name == categoryName,
+  //         orElse: () => Category(name: '', image: ''));
+  //     return category.image;
+  //   } catch (error) {
+  //     return ''; // Or provide a default image URL
+  //   }
+  // }
 
+  
   // SingleChildScrollView(
             //   scrollDirection: Axis.vertical,
             //   child: storeDesigns.isEmpty
