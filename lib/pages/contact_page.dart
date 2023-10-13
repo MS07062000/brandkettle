@@ -64,7 +64,8 @@ class ContactUsFormState extends State<ContactUsForm> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(
+                      top: 25.0, left: 10.0, right: 10.0, bottom: 10.0),
                   child: TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Name',
@@ -88,9 +89,6 @@ class ContactUsFormState extends State<ContactUsForm> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your name';
-                      }
-                      if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                        return 'Name should contain only letters (a-z or A-Z)';
                       }
                       return null; // Return null if the input is valid
                     },
@@ -136,19 +134,19 @@ class ContactUsFormState extends State<ContactUsForm> {
                     ),
                     autovalidateMode: AutovalidateMode.disabled,
                     controller: phoneNumberController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a phone number';
-                      }
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return 'Please enter a phone number';
+                    //   }
 
-                      value = '+91$value';
-                      // Check if the value follows the Indian phone number format
-                      if (!RegExp(r'^\+91[1-9]\d{9}$').hasMatch(value)) {
-                        return 'Invalid Indian phone number';
-                      }
+                    //   value = '+91$value';
+                    //   // Check if the value follows the Indian phone number format
+                    //   if (!RegExp(r'^\+91[1-9]\d{9}$').hasMatch(value)) {
+                    //     return 'Invalid Indian phone number';
+                    //   }
 
-                      return null;
-                    },
+                    //   return null;
+                    // },
                   ),
                 ),
                 Padding(

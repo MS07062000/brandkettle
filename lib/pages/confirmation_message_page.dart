@@ -12,11 +12,10 @@ class ConfirmationMessage extends StatelessWidget {
     String lottieAnimation = success
         ? 'assets/animations/animation_lmggsxht.json'
         : 'assets/animations/animation_lmggseyf.json';
-    String message = success
-        ? "Our team will connect with you in 24 hours"
-        : "Please try again";
+    String message =
+        success ? "Our team will connect within 24 hours" : "Please try again";
 
-    String buttonText = success ? "Done" : "Try Again";
+    String buttonText = success ? "Go to Home" : "Try Again";
     return Scaffold(
       body: Column(
           mainAxisAlignment: MainAxisAlignment.center, // Center vertically
@@ -26,7 +25,11 @@ class ConfirmationMessage extends StatelessWidget {
               padding: const EdgeInsets.all(15.0), // Add padding to all sides
               child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  child: Lottie.asset(lottieAnimation)),
+                  child: Lottie.asset(lottieAnimation, height: 180.0)),
+            ),
+            Text(
+              success ? "Submitted Successfully" : "Failed",
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             Text(
@@ -39,9 +42,7 @@ class ConfirmationMessage extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
-                  backgroundColor: success
-                      ? const Color(0xFF2CDA94)
-                      : const Color(0xFFE25B5B),
+                  backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   elevation: 10,
                 ),

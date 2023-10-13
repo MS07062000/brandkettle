@@ -6,6 +6,7 @@ import 'package:my_app/database/models/category_schema.dart';
 import 'package:my_app/database/models/storedesign_schema.dart';
 import 'package:my_app/pages/detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:my_app/pages/contact_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     Category(
         name: 'Professional',
         image: 'assets/images/categories/professional.png'),
-    Category(name: 'Clinic', image: 'assets/images/categories/sports.png'),
+    Category(name: 'Clinic', image: 'assets/images/categories/clinic.png'),
     Category(name: 'Eyewear', image: 'assets/images/categories/eyewear.png'),
   ];
   List<StoreDesign> storeDesigns = [];
@@ -61,6 +62,13 @@ class _HomePageState extends State<HomePage> {
         actions: [
           InkWell(
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const ContactUsForm(submissionSuccessful: true),
+                ),
+              );
               // Add your onTap logic here
             },
             child: Padding(
