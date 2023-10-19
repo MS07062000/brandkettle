@@ -111,13 +111,6 @@ class _DetailPageState extends State<DetailPage> {
                           borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // const Text(
-                  //   "10 best interior ideas for your\nliving room",
-                  //   style: TextStyle(fontSize: 20, height: 1.5),
-                  // ),
                   const SizedBox(
                     height: 20,
                   ),
